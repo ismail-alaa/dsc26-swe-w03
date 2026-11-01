@@ -1,13 +1,22 @@
+# AI usage
+
+Keep all three headings exactly as they are. If this file is missing or any heading is
+missing, the grader stops and gives 0 ("AI_USAGE.md missing or incomplete"). The content
+is not scored, but your Track Mentor reads it and the W8 defence can ask about it.
+
 ## Tools
 
-I used ChatGPT to help interpret the task requirements, draft the SQLAlchemy models, Alembic migration, FastAPI endpoints, and identify edge cases for validation, transactions, idempotency, authentication, and rate limiting. I reviewed and tested the generated implementation locally.
+<!-- Which tools you used (ChatGPT, Copilot, Claude, Cursor, none...) and for which parts. -->
 
 ## What AI got wrong
 
-An initial draft treated `Request.json()` as if it were synchronous inside a synchronous FastAPI endpoint. I caught this while reviewing request handling and changed the transfer endpoint to an async handler that awaits `request.json()`.
+<!-- At least one thing an assistant got wrong that you changed, and how you noticed
+(a test failed, the docs said otherwise, you ran it). -->
 
 ## In my own words
 
-1. A transfer to someone else's account returns 404 so the API does not reveal whether that account exists or belongs to another customer. This helps prevent account enumeration.
+<!-- Answer without AI, one or two sentences each. -->
 
-2. If the transfer commits but the idempotency record is written later in a separate transaction, a crash between those transactions can leave the money moved without a saved retry result. The customer's retry could then create a second transfer and debit them twice.
+1. Why does a transfer to someone else's account return 404 and not 403?
+
+2. What would happen to a customer if your idempotency record were written in a separate transaction after the transfer?
